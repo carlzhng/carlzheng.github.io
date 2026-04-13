@@ -1,0 +1,78 @@
+{
+  "person": {
+    "name": "Carlson Zheng",
+    "role": "Computer Engineer",
+    "location": "Edmonton, Alberta",
+    "email": "carlson.zheng2@gmail.com",
+    "resumeUrl": "./assets/CarlsonZheng.pdf",
+    "hero": {
+      "kicker": "Hey! My name is, ",
+      "nameLower": "Carlson Zheng",
+      "aboutMe": ""
+    },
+    "education": {
+      "program": "BSc Computer Engineering Co-op",
+      "school": "University of Alberta",
+      "location": "Edmonton, Alberta",
+      "dates": "2024 — 2029"
+    },
+
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/carlzhng" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/carlsonzheng/" }
+    ]
+  },
+  "projects": [
+    {
+      "name": "PomoRobo",
+      "description": "What it is, who it’s for, and the measurable impact.",
+      "video": {
+        "src": "./assets/videos/pomorobo.mp4",
+        "poster": "./assets/videos/pomorobo-poster.jpg",
+        "type": "video/mp4"
+      },
+      "tags": ["C/C++", "Arduino"],
+      "highlights": ["Built X to reduce Y", "Designed Z and improved A by B%"],
+      "links": [
+        { "label": "DevPost", "url": "https://devpost.com/software/homo-robo-a-modular-assistive-robotics-platform" },
+        { "label": "Github", "url": "https://github.com/carlzhng/Starting-Five_Pomo_Robo" }
+      ]
+    },
+    {
+      "name": "Project Two",
+      "description": "A short, specific description. Prefer outcomes over features.",
+      "tags": ["Python", "ML", "CLI"],
+      "highlights": ["Implemented …", "Optimized …"],
+      "links": [{ "label": "Code", "url": "https://github.com/your-handle/project-two" }]
+    }
+  ],
+  "about": {
+    "subtitle": "placeholder",
+    "awards": [
+      {
+        "title": "Certificate of Distinction - CSMC",
+        "subtitle": "Recognized for ranking among the top 25% out of the 15,000+ contestants in the 2023 Canadian Senior Mathematics Contest. Issued by the University of Waterloo."
+      }
+    ],
+    "experiences": [
+      {
+        "title": "Electrical Transmission Team Member",
+        "subtitle": "Alberta Bionix | Edmonton, AB",
+        "dates": "Dec 2025 — present",
+        "details": "Contributing to the development of an EMG-powered prosthetic leg, integrating gait-cycle-based EMG control with PID encoder feedback and motor control. Designed and validated custom encoder and IMU sensor systems for 100% signal reliability and gait analysis."
+      },
+      {
+        "title": "Sailing Instructor",
+        "subtitle": "City of Calgary | Calgary, AB",
+        "dates": "Aug 2023",
+        "details": "Taught students ages 8-14 the fundamentals of sailing and boat handling. Prioritized student safety and well-being by following safety protocols, closely monitoring individual progress, and promoting an inclusive and enjoyable sailing experience."
+      },
+      {
+        "title": "Vice-President of Communications",
+        "subtitle": "Junior Achievement Southern Alberta| Calgary, AB",
+        "dates": "Oct 2022 — Apr 2023",
+        "details": "Taught students ages 8-14 the fundamentals of sailing and boat handling. Prioritized student safety and well-being by following safety protocols, closely monitoring individual progress, and promoting an inclusive and enjoyable sailing experience."
+      }
+    ]
+  }
+}

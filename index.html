@@ -1,0 +1,152 @@
+<!doctype html>
+    <html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Personal portfolio: projects, experience, and about." />
+    <title>Portfolio</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="./">
+          <span class="brand-mark" aria-hidden="true">⌁</span>
+          <span class="brand-text" id="brandName">Your Name</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a class="nav-link" href="#home">Home</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#projects">Projects</a>
+          <a class="nav-link" href="#contact">Contact</a>
+          <button id="themeToggle" class="icon-button" type="button" aria-label="Toggle theme">
+            <span aria-hidden="true" id="themeIcon">◐</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="site-main">
+      <section id="home" class="hero hero-minimal">
+        <div class="container">
+          <p class="kicker" id="heroKicker">portfolio</p>
+          <h1 class="hero-name" id="heroName">your name</h1>
+          
+          <section class="card edu-box" aria-label="Education">
+            <h2 class="mini-title" style="margin-bottom:8px"></h2>
+            <div class="stack">
+              <div>
+                <p class="label" style="margin:0 0 6px 0">Program</p>
+                <p class="muted" id="eduProgram" style="margin:0">—</p>
+              </div>
+              <div>
+                <p class="label" style="margin:0 0 6px 0">School</p>
+                <p class="muted" id="eduSchool" style="margin:0">—</p>
+              </div>
+              <div class="stack" style="gap:6px">
+                <p class="muted small" id="eduMeta" style="margin:0">—</p>
+              </div>
+            </div>
+          </section>
+
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">view projects</a>
+            <a class="button" id="resumeButton" href="./resume.html">resume</a>
+          </div>
+
+          <div class="hero-links" id="heroLinks" aria-label="Social links"></div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>about</h2>
+            <p class="muted" id="aboutSubtitle"></p>
+          </div>
+
+          <section class="mini-block" aria-label="About me">
+            <p class="mini-text" id="aboutMeText"></p>
+          </section>
+
+          <div class="tabs" role="tablist" aria-label="About tabs">
+            <button class="tab is-active" type="button" role="tab" aria-selected="true" aria-controls="tabExp" id="tabExpBtn">
+              experiences
+            </button>
+            <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="tabAwards" id="tabAwardsBtn">
+              awards
+            </button>
+          </div>
+
+          <div class="tab-panels">
+            <div class="tab-panel" role="tabpanel" id="tabAwards" aria-labelledby="tabAwardsBtn">
+              <div class="stack" id="awardsList"></div>
+            </div>
+            <div class="tab-panel is-active" role="tabpanel" id="tabExp" aria-labelledby="tabExpBtn">
+              <div class="stack" id="expList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>projects</h2>
+            <p class="muted">Bringing Creative mode to real life.</p>
+          </div>
+          <div class="grid" id="projectsGrid" aria-live="polite">Bringing Creative mode to real life.</div>
+        </div>
+      </section>
+
+      <section id="contact" class="section alt">
+        <div class="container">
+          <div class="card contact-compact">
+            <div class="stack">
+              <div class="contact-compact-top">
+                <h2 style="margin:0">contact</h2>
+                <p class="muted" style="margin:0">want to work together? just reach out!</p>
+              </div>
+              <div>
+                <p class="label">Location</p>
+                <p id="locationText" class="muted" style="margin:0">Your City</p>
+              </div>
+              <div>
+                <p class="label">Links</p>
+                <div id="contactLinks" class="contact-links"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p class="muted small">
+          © <span id="year"></span> <span id="footerName">Your Name</span>. Built with plain HTML/CSS/JS.
+        </p>
+        <a class="muted small link" href="#main">Back to top</a>
+      </div>
+    </footer>
+
+    <dialog class="modal" id="projectModal" aria-label="Project details">
+      <div class="modal-inner">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button>
+        <div class="stack">
+          <h3 id="modalTitle" style="margin:0">Project</h3>
+          <p id="modalDesc" class="muted" style="margin:0"></p>
+          <div id="modalTags" class="chip-row"></div>
+          <div id="modalHighlights" class="muted"></div>
+          <div id="modalLinks" class="contact-links"></div>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="./app.js?v=3" type="module"></script>
+  </body>
+</html>
