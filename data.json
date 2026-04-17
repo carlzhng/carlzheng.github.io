@@ -25,33 +25,59 @@
   "projects": [
     {
       "name": "PomoRobo",
-      "description": "What it is, who it’s for, and the measurable impact.",
-      "video": {
-        "src": "./assets/videos/pomorobo.mp4",
-        "poster": "./assets/videos/pomorobo-poster.jpg",
-        "type": "video/mp4"
+      "description": "Do you ever wish you owned a Pixar Lamp that could help you study? PomoRobo is the next best thing! As part of a group of engineers at HackED 2026, I helped design and test PomoRobo, a modular assistive robotic arm that helps you stay focused and productive. I was tasked with designing the control logic and interfacing the electrical components of the arm. PomoRobo is comprised of an ELEGOO arduino, a stepper motor, a LCD display, and servo motors.",
+      "media": {
+        "image": "./assets/pomorobo.jpg",
+        "modalImage": "./assets/pomoRoboGIF.gif"
       },
       "tags": ["C/C++", "Arduino"],
-      "highlights": ["Built X to reduce Y", "Designed Z and improved A by B%"],
+      "highlights": ["Built to 3 DOF to reduce complexity and improve usability.", "Designed and built at HackED 2026."],
       "links": [
-        { "label": "DevPost", "url": "https://devpost.com/software/homo-robo-a-modular-assistive-robotics-platform" },
-        { "label": "Github", "url": "https://github.com/carlzhng/Starting-Five_Pomo_Robo" }
+        { "label": "Github", "url": "https://github.com/carlzhng/Starting-Five_Pomo_Robo" },
+        { "label": "DevPost", "url": "https://devpost.com/software/homo-robo-a-modular-assistive-robotics-platform" }
       ]
     },
     {
-      "name": "Project Two",
-      "description": "A short, specific description. Prefer outcomes over features.",
-      "tags": ["Python", "ML", "CLI"],
-      "highlights": ["Implemented …", "Optimized …"],
-      "links": [{ "label": "Code", "url": "https://github.com/your-handle/project-two" }]
+      "name": "Prompty",
+      "description": "Selected as one of the top 12% applicants to propose a strategic solution aimed to mitigate student career anxiety through the use of a gamified platform that targets the users ability to think critically and make decisions ethically. As part of a team, I was tasked with assisting in the devleopment of the first iteration of the websites's frontend and presenting the final product to industry professionals. The website uses generated prompts that asks the user a question and encourages original and imaginative thinking.",
+      "media": {
+        "image": "./assets/prompty.png",
+        "modalImage": "./assets/promptyGIF.gif"
+      },
+      "tags": ["React", "JavaScript"],
+      "highlights": ["Built for the Digital Innovation Case Competition Competition (DICC) 2026."],
+      "links": [{ "label": "Github", "url": "https://github.com/Kiekeku/DICC-2026" }]
+    },
+    {
+      "name": "Ted's Clanker",
+      "description": "Developed using Discord API, Flask, and a simple Python script, Ted's Clanker is a personal automated Discord bot that tracks user locations and informs members within a server when the user has left or arrived home safely. Once past 10:00 pm and the user has not returned home, Ted's Clanker informs the server and encourages others to check on the user. Using custom API endpoints, Ted's Clanker also allows for timed messages to be sent to the server which can be used as reminders for events or tasks.",
+      "media": {
+        "image": "./assets/teds_clanker.png"
+      },
+      "tags": ["Python", "Flask", "Discord API"],
+      "highlights": ["Implemented custom API endpoints for real-time management of users location, reducing manual configuration time by 30%.", "Deployed to Render Cloud hosting ensuring 99% uptime and continuous 24/7 operation."],
+      "links": [{ "label": "Github", "url": "https://github.com/carlzhng/discord-auto-msg" }]
+    },
+    {
+      "name": "This Portfolio!",
+      "description": "Developed using HTML, CSS, and JavaScript, this portfolio is a showcase of my projects and achievements. It is hosted on GitHub Pages and is deployed using Vercel. The portfolio is responsive and mobile-friendly, and is built with a modern and clean design.",
+      "media": {
+        "image": "./assets/portfolioProject.jpg"
+      },
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "links": [{ "label": "Github", "url": "https://github.com/carlzhng/carlzhng.github.io" }]
     }
   ],
   "about": {
-    "subtitle": "placeholder",
+    "subtitle": "If you're like me, you probably like Lebron James.",
     "awards": [
       {
         "title": "Certificate of Distinction - CSMC",
         "subtitle": "Recognized for ranking among the top 25% out of the 15,000+ contestants in the 2023 Canadian Senior Mathematics Contest. Issued by the University of Waterloo."
+      },
+      {
+        "title": "Alexander Rutherford Scholarship",
+        "subtitle": "Awarded $2500 for demonstrating academic excellence in the 2024 Alberta Senior High School Scholarships. Issued by Government of Alberta."
       }
     ],
     "experiences": [
@@ -71,7 +97,7 @@
         "title": "Vice-President of Communications",
         "subtitle": "Junior Achievement Southern Alberta| Calgary, AB",
         "dates": "Oct 2022 — Apr 2023",
-        "details": "Taught students ages 8-14 the fundamentals of sailing and boat handling. Prioritized student safety and well-being by following safety protocols, closely monitoring individual progress, and promoting an inclusive and enjoyable sailing experience."
+        "details": "Spearheaded a student-run company in the production of over 500+ units and achieving over $1265+ in revenue and securing the Business Plan of the Year award out of the 30+ competing companies."
       }
     ]
   }

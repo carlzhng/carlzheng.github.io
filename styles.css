@@ -1,28 +1,32 @@
 :root{
   --bg: #0b1220;
+  --surface: #121a2a;
+  --surface-2: #1a2438;
   --panel: rgba(255,255,255,.06);
   --panel2: rgba(255,255,255,.08);
-  --text: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.70);
-  --border: rgba(255,255,255,.12);
-  --shadow: 0 16px 50px rgba(0,0,0,.40);
+  --text: rgba(255,255,255,.97);
+  --muted: rgba(255,255,255,.80);
+  --border: rgba(255,255,255,.20);
+  --shadow: 0 10px 24px rgba(0,0,0,.22), 0 2px 8px rgba(0,0,0,.16);
   --accent: #7c5cff;
   --accent2: #19c37d;
   --ring: rgba(124,92,255,.35);
   --max: 1080px;
-  --radius: 16px;
-  --radius2: 22px;
+  --radius: 20px;
+  --radius2: 28px;
   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
 :root[data-theme="light"]{
   --bg: #f7f7fb;
+  --surface: #ffffff;
+  --surface-2: #f1f3f9;
   --panel: rgba(0,0,0,.04);
   --panel2: rgba(0,0,0,.06);
   --text: rgba(0,0,0,.90);
   --muted: rgba(0,0,0,.64);
   --border: rgba(0,0,0,.12);
-  --shadow: 0 16px 50px rgba(20,20,30,.15);
+  --shadow: 0 10px 24px rgba(20,20,30,.10), 0 2px 8px rgba(20,20,30,.08);
   --accent: #5b3fff;
   --accent2: #960cd1;
   --ring: rgba(91,63,255,.25);
@@ -34,11 +38,13 @@ body{
   margin:0;
   font-family:var(--font);
   color:var(--text);
+  background-color: var(--bg);
   background:
     radial-gradient(1200px 800px at 20% 0%, rgba(124,92,255,.22), transparent 55%),
     radial-gradient(900px 700px at 100% 10%, rgba(25,195,125,.18), transparent 60%),
-    radial-gradient(900px 700px at 40% 100%, rgba(255,255,255,.07), transparent 60%),
-    var(--bg);
+    radial-gradient(900px 700px at 40% 100%, rgba(255,255,255,.07), transparent 60%);
+  position: relative;
+  min-height: 100vh;
 }
 
 a{color:inherit}
@@ -62,7 +68,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .site-header{
   position:sticky;top:0;z-index:50;
   backdrop-filter: blur(14px);
-  background: linear-gradient(to bottom, rgba(10,15,25,.78), rgba(10,15,25,.30));
+  background: linear-gradient(to bottom, rgba(8,12,21,.90), rgba(8,12,21,.58));
   border-bottom:1px solid var(--border);
 }
 :root[data-theme="light"] .site-header{
@@ -75,11 +81,13 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
 .brand-mark{
-  display:inline-grid;place-items:center;
-  width:34px;height:34px;border-radius:12px;
-  background:linear-gradient(135deg, rgba(124,92,255,.9), rgba(25,195,125,.75));
-  color:white;font-weight:900;
-  box-shadow:0 10px 24px rgba(124,92,255,.22);
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  object-fit:cover;
+  display:block;
+  border:1px solid var(--border);
+  box-shadow:0 8px 18px rgba(0,0,0,.15);
 }
 .brand-text{font-weight:700;letter-spacing:.2px}
 
@@ -87,13 +95,13 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .nav{justify-content:center}
 .nav-link{
   text-decoration:none;
-  padding:8px 10px;border-radius:12px;
+  padding:8px 10px;border-radius:16px;
   color:var(--muted);
   border:1px solid transparent;
 }
 .nav-link:hover{color:var(--text);background:var(--panel);border-color:var(--border)}
 .icon-button{
-  height:38px;width:38px;border-radius:14px;
+  height:38px;width:38px;border-radius:18px;
   display:grid;place-items:center;
   border:1px solid var(--border);
   background:var(--panel);
@@ -104,11 +112,12 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .icon-button:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
 
 .site-main{padding-bottom:40px}
+.site-main{position:relative;z-index:2}
 .section{padding:70px 0}
 .section.alt{
   border-top:1px solid var(--border);
   border-bottom:1px solid var(--border);
-  background:linear-gradient(to bottom, rgba(255,255,255,.02), rgba(255,255,255,.00));
+  background: transparent;
 }
 .section-head{
   display:flex;
@@ -174,7 +183,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .button{
   display:inline-flex;align-items:center;justify-content:center;
-  padding:10px 14px;border-radius:14px;
+  padding:10px 14px;border-radius:18px;
   text-decoration:none;
   border:1px solid var(--border);
   background:var(--panel);
@@ -208,6 +217,10 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
   color:var(--text);
 }
 .pill-icon svg{display:block}
+.project-link-icon{
+  width:36px;
+  height:36px;
+}
 
 .hero-card{
   border-radius:var(--radius2);
@@ -247,7 +260,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 }
 .card{
   border-radius:var(--radius2);
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  background: var(--surface);
   border:1px solid var(--border);
   box-shadow: var(--shadow);
   padding:16px;
@@ -259,7 +272,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .project{cursor:pointer;transition:transform .12s ease}
 .project:hover{transform:translateY(-1px)}
 .project:focus-within{outline:3px solid var(--ring);outline-offset:2px}
-.project-video{
+.project-media{
   width:100%;
   aspect-ratio: 16 / 9;
   border-radius:18px;
@@ -267,7 +280,7 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
   background: rgba(255,255,255,.03);
   object-fit: cover;
 }
-:root[data-theme="light"] .project-video{background: rgba(0,0,0,.03)}
+:root[data-theme="light"] .project-media{background: rgba(0,0,0,.03)}
 .project h3{margin:0;font-size:18px}
 .project p{margin:0;color:var(--muted);line-height:1.5}
 .project .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -282,9 +295,13 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 .link{
   color:var(--text);
   text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.24);
+}
+.link:hover{border-bottom-color:rgba(255,255,255,.50)}
+:root[data-theme="light"] .link{
   border-bottom:1px solid transparent;
 }
-.link:hover{border-bottom-color:var(--border)}
+:root[data-theme="light"] .link:hover{border-bottom-color:var(--border)}
 
 .timeline{display:grid;gap:14px}
 .role{display:grid;gap:8px}
@@ -339,6 +356,11 @@ code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Libera
 }
 .contact-compact-top{display:grid;gap:6px}
 
+.edu-box{
+  width: min(100%, 520px);
+  margin: 0 auto;
+}
+
 textarea{
   width:100%;
   padding:12px 12px;
@@ -356,7 +378,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
 .site-footer{
   border-top:1px solid var(--border);
   padding:24px 0;
-  background: linear-gradient(to top, rgba(255,255,255,.02), rgba(255,255,255,0));
+  background: transparent;
 }
 .footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 
@@ -364,7 +386,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
 .tabs{justify-content:center}
 .tab{
   border:1px solid var(--border);
-  background:var(--panel);
+  background:var(--surface-2);
   color:var(--muted);
   padding:10px 12px;
   border-radius:999px;
@@ -375,16 +397,33 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(25,195,125,.92));
   border-color: transparent;
   color:white;
+  animation: tabPop 220ms cubic-bezier(.22,.68,0,1.35);
 }
 .tab-panels{margin-top:10px}
-.tab-panel{display:none}
-.tab-panel.is-active{display:block}
+.tab-panel{
+  display:block;
+  opacity:0;
+  transform: translateY(8px) scale(.985);
+  max-height:0;
+  overflow:hidden;
+  pointer-events:none;
+  transition: opacity 220ms ease, transform 240ms cubic-bezier(.22,.68,0,1.2), max-height 260ms ease;
+}
+.tab-panel.is-active{
+  opacity:1;
+  transform: translateY(0) scale(1);
+  max-height: 3000px;
+  overflow: visible;
+  pointer-events:auto;
+  animation: panelPop 260ms cubic-bezier(.22,.68,0,1.2);
+}
+.tab-panel .stack{gap:12px}
 
 .item{
   padding:14px 14px;
-  border-radius:var(--radius2);
+  border-radius:32px;
   border:1px solid var(--border);
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  background: var(--surface);
   box-shadow: var(--shadow);
 }
 .item h3{margin:0 0 6px 0;font-size:16px}
@@ -413,7 +452,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
 .modal-close{
   position:absolute;
   top:10px;right:10px;
-  height:38px;width:38px;border-radius:14px;
+  height:38px;width:38px;border-radius:18px;
   display:grid;place-items:center;
   border:1px solid var(--border);
   background:var(--panel);
@@ -423,7 +462,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   pointer-events: auto;
 }
 .modal-close:hover{background:var(--panel2)}
-.modal-video{
+.modal-media{
   width:100%;
   aspect-ratio: 16 / 9;
   border-radius:18px;
@@ -431,7 +470,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   background: rgba(255,255,255,.03);
   object-fit: cover;
 }
-:root[data-theme="light"] .modal-video{background: rgba(0,0,0,.03)}
+:root[data-theme="light"] .modal-media{background: rgba(0,0,0,.03)}
 
 @media (max-width: 920px){
   .hero-grid{grid-template-columns: 1fr}
@@ -449,8 +488,14 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
+}
+
+.site-header,
+.site-footer {
+  position: relative;
+  z-index: 2;
 }
 
 /* ── FULLSCREEN HERO ── */
@@ -474,6 +519,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   will-change: transform, opacity;
   transition: transform 0.05s linear, opacity 0.05s linear;
   padding: 0 16px;
+  opacity: 1;
 }
 
 .hero-fullscreen .hero-name {
@@ -482,6 +528,10 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   letter-spacing: -2px;
   margin: 0;
   white-space: nowrap;
+  color: var(--text);
+  text-shadow: 0 2px 18px rgba(0,0,0,.24);
+  opacity: 0;
+  animation: heroTitleFadeIn 3.6s cubic-bezier(.22,.68,0,1.08) 0.38s forwards;
 }
 
 .hero-fullscreen .kicker {
@@ -490,6 +540,19 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   text-transform: uppercase;
   color: var(--muted);
   margin: 0;
+  opacity: 0;
+  animation: heroKickerFadeIn 2.8s cubic-bezier(.22,.68,0,1.08) 0.12s forwards;
+}
+.hero-name-wrap .hero-actions {
+  opacity: 0;
+  animation: heroRestFadeIn 0.65s ease-out 1.25s forwards;
+}
+.hero-name-wrap .hero-links {
+  opacity: 0;
+  animation: heroRestFadeIn 0.65s ease-out 1.85s forwards;
+}
+:root[data-theme="dark"] .hero-fullscreen .hero-name {
+  color: rgba(255,255,255,.98);
 }
 
 /* ── SCROLL HINT ── */
@@ -503,14 +566,14 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   align-items: center;
   gap: 8px;
   opacity: 0;
-  animation: fadeInHint 1s ease 1.2s forwards;
+  animation: fadeInHint 0.9s ease 2.85s forwards;
 }
 .scroll-hint-line {
   width: 1px;
   height: 40px;
   background: var(--border);
   display: block;
-  animation: scrollPulse 1.6s ease-in-out 1.2s infinite;
+  animation: scrollPulse 1.6s ease-in-out 2.85s infinite;
 }
 .scroll-hint-text {
   font-size: 11px;
@@ -520,6 +583,46 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
 }
 @keyframes fadeInHint {
   to { opacity: 1; }
+}
+@keyframes heroKickerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes heroTitleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes heroRestFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes tabPop {
+  0% { transform: scale(.96); }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes panelPop {
+  0% { opacity: 0; transform: translateY(10px) scale(.98); }
+  70% { opacity: 1; transform: translateY(-2px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 @keyframes scrollPulse {
   0%, 100% { transform: scaleY(1); opacity: 0.5; }

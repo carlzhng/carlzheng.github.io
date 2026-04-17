@@ -17,21 +17,21 @@ export function initPCB() {
   function colors() {
     if (isDark()) {
       return {
-        bg: "transparent",
-        trace: "rgba(124,92,255,0.18)",
-        node: "rgba(25,195,125,0.28)",
-        nodeFill: "rgba(25,195,125,0.12)",
-        cube: "rgba(124,92,255,0.35)",
-        cubeFill: "rgba(124,92,255,0.08)",
+        bg: "rgba(9,14,24,0.22)",
+        trace: "rgba(138,115,255,0.42)",
+        node: "rgba(62,230,156,0.62)",
+        nodeFill: "rgba(62,230,156,0.22)",
+        cube: "rgba(162,140,255,0.55)",
+        cubeFill: "rgba(124,92,255,0.16)",
       };
     }
     return {
-      bg: "transparent",
-      trace: "rgba(91,63,255,0.10)",
-      node: "rgba(10,150,80,0.20)",
-      nodeFill: "rgba(10,150,80,0.06)",
-      cube: "rgba(91,63,255,0.22)",
-      cubeFill: "rgba(91,63,255,0.05)",
+      bg: "rgba(247,247,251,0.22)",
+      trace: "rgba(91,63,255,0.16)",
+      node: "rgba(11,138,88,0.34)",
+      nodeFill: "rgba(11,138,88,0.10)",
+      cube: "rgba(91,63,255,0.30)",
+      cubeFill: "rgba(91,63,255,0.08)",
     };
   }
 
@@ -79,7 +79,8 @@ export function initPCB() {
         const dy = nodes[j].y - nodes[i].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 130 && Math.random() < 0.35) {
-          edges.push({ a: i, b: j });
+          // Store a stable routing mode per edge so traces do not jitter frame-to-frame.
+          edges.push({ a: i, b: j, horizontalFirst: Math.random() < 0.5 });
         }
       }
     }
@@ -99,11 +100,11 @@ export function initPCB() {
         rx: Math.random() * Math.PI * 2,
         ry: Math.random() * Math.PI * 2,
         rz: Math.random() * Math.PI * 2,
-        drx: (Math.random() - 0.5) * 0.008,
-        dry: (Math.random() - 0.5) * 0.009,
-        drz: (Math.random() - 0.5) * 0.006,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
+        drx: (Math.random() - 0.5) * 0.012,
+        dry: (Math.random() - 0.5) * 0.013,
+        drz: (Math.random() - 0.5) * 0.009,
+        vx: (Math.random() - 0.5) * 0.52,
+        vy: (Math.random() - 0.5) * 0.52,
         opacity: 0.3 + Math.random() * 0.5
       });
     }
@@ -160,7 +161,7 @@ export function initPCB() {
       const a = nodes[e.a], b = nodes[e.b];
       ctx.beginPath();
       // Manhattan routing: horizontal then vertical
-      if (Math.random() < 0.5) {
+      if (e.horizontalFirst) {
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -192,9 +193,13 @@ export function initPCB() {
   }
 
   function frame() {
-    ctx.clearRect(0, 0, W, H);
     const col = colors();
-    rotation += 0.00018;
+    ctx.clearRect(0, 0, W, H);
+    if (col.bg) {
+      ctx.fillStyle = col.bg;
+      ctx.fillRect(0, 0, W, H);
+    }
+    rotation += 0.00042;
 
     drawPCB(col, rotation);
 
@@ -242,11 +247,12 @@ export function initScrollShrink() {
   function onScroll() {
     const scrollY = window.scrollY;
     const heroH = heroSection.offsetHeight;
-    const progress = Math.min(scrollY / (heroH * 0.7), 1);
+    // Slower progression so the name minimizes gradually as user scrolls.
+    const progress = Math.min(scrollY / (heroH * 1.35), 1);
 
-    const scale = 1 - progress * 0.38;
-    const translateY = -progress * 60;
-    const opacity = 1 - progress * 0.7;
+    const scale = 1 - progress * 0.32;
+    const translateY = -progress * 42;
+    const opacity = 1 - progress * 0.18;
 
     wrap.style.transform = `scale(${scale}) translateY(${translateY}px)`;
     wrap.style.opacity = opacity;

@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Personal portfolio: projects, experience, and about." />
-    <title>Portfolio</title>
-    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <title>Carlson Zheng</title>
+    <link rel="icon" href="./assets/logo.png" type="image/png" />
+    <link rel="alternate icon" href="./assets/logo.png" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -16,7 +17,7 @@
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="./">
-          <span class="brand-mark" aria-hidden="true">⌁</span>
+          <img class="brand-mark" src="./assets/fabicon.png" alt="Carlson Zheng logo" />
           <span class="brand-text" id="brandName">Your Name</span>
         </a>
         <nav class="nav" aria-label="Primary">
@@ -38,7 +39,7 @@
           <h1 class="hero-name" id="heroName">your name</h1>
           <div class="hero-actions">
             <a class="button primary press-btn" href="#projects">view projects</a>
-            <a class="button press-btn" id="resumeButton" href="./resume.html">resume</a>
+            <a class="button press-btn" id="resumeButton" href="./resume.html" target="_blank" rel="noreferrer">resume</a>
           </div>
           <div class="hero-links" id="heroLinks" aria-label="Social links"></div>
         </div>
@@ -48,8 +49,11 @@
         </div>
       </section>
 
-      <section id="eduSection" class="section section-reveal" style="padding-top:40px">
+      <section id="education" class="section section-reveal">
         <div class="container">
+          <div class="section-head reveal-card">
+            <h2>education</h2>
+          </div>
           <section class="card edu-box reveal-card" aria-label="Education">
             <div class="stack">
               <div>
@@ -115,6 +119,10 @@
                 <p class="muted" style="margin:0">want to work together? just reach out!</p>
               </div>
               <div>
+                <p class="label">Email</p>
+                <a id="emailLink" class="link" href="mailto:you@example.com">you@example.com</a>
+              </div>
+              <div>
                 <p class="label">Location</p>
                 <p id="locationText" class="muted" style="margin:0">Your City</p>
               </div>
@@ -131,7 +139,7 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <p class="muted small">
-          © <span id="year"></span> <span id="footerName">Your Name</span>. Built with plain HTML/CSS/JS.
+          © <span id="year"></span> <span id="footerName">Your Name</span>.
         </p>
         <a class="muted small link" href="#main">Back to top</a>
       </div>

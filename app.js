@@ -17,6 +17,21 @@ function iconSvg(kind) {
       </svg>
     `.trim();
   }
+  if (kind === "devpost") {
+    return `
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M5 4h7.8c3.9 0 6.2 2.2 6.2 6s-2.3 6-6.2 6H9.2v4H5V4Zm7.4 8c1.7 0 2.8-1 2.8-2.4 0-1.5-1.1-2.5-2.8-2.5H9.2V12h3.2Z"/>
+      </svg>
+    `.trim();
+  }
+  return null;
+}
+
+function linkIconKey(link) {
+  const label = String(link?.label || "").trim().toLowerCase();
+  const url = String(link?.url || "").trim().toLowerCase();
+  if (label.includes("github") || url.includes("github.com")) return "github";
+  if (label.includes("devpost") || url.includes("devpost.com")) return "devpost";
   return null;
 }
 
@@ -75,35 +90,43 @@ function safeMediaUrl(url) {
   return href;
 }
 
-function guessVideoType(src) {
-  const s = String(src || "").toLowerCase();
-  if (s.endsWith(".webm")) return "video/webm";
-  if (s.endsWith(".mp4")) return "video/mp4";
-  return "";
-}
-
-function renderProjectVideo(p) {
-  const v = p?.video;
-  if (!v || !v.src) return null;
-  const src = safeMediaUrl(v.src);
+function renderProjectMedia(p, context = "card") {
+  // context: "card" = grid thumbnail; "modal" = detail view (can use animated GIF)
+  const m = p?.media || {};
+  let raw = null;
+  if (context === "modal") {
+    raw =
+      m.modalImage ||
+      m.image ||
+      p?.image ||
+      p?.thumbnail ||
+      p?.video?.poster ||
+      null;
+  } else {
+    raw =
+      m.image ||
+      p?.image ||
+      p?.thumbnail ||
+      p?.video?.poster ||
+      null;
+  }
+  if (!raw) return null;
+  const src = safeMediaUrl(raw);
   if (!src) return null;
 
-  const video = document.createElement("video");
-  video.className = "project-video";
-  video.muted = true;
-  video.loop = true;
-  video.playsInline = true;
-  video.preload = "metadata";
-  video.autoplay = true;
-  video.setAttribute("aria-label", `${p?.name || "project"} preview`);
-  if (v.poster) video.poster = v.poster;
-
-  const source = document.createElement("source");
-  source.src = src;
-  const type = v.type || guessVideoType(src);
-  if (type) source.type = type;
-  video.append(source);
-  return video;
+  const img = document.createElement("img");
+  img.className = context === "modal" ? "modal-media" : "project-media";
+  img.src = src;
+  img.alt =
+    context === "modal"
+      ? `${p?.name || "Project"} — detail preview`
+      : `${p?.name || "Project"} preview`;
+  img.loading = "lazy";
+  img.decoding = "async";
+  img.addEventListener("error", () => {
+    img.remove();
+  }, { once: true });
+  return img;
 }
 
 function renderLinks(container, links, variant = "pill") {
@@ -152,21 +175,29 @@ function renderProjects(container, projects) {
   if (!container) return;
   container.innerHTML = "";
   for (const p of projects || []) {
-    const preview = renderProjectVideo(p);
+    const preview = renderProjectMedia(p, "card");
     const tags = el("div", { class: "meta" }, (p.tags || []).map((t) => el("span", { class: "tag", text: t })));
     const links = el("div", { class: "links" });
     for (const l of p.links || []) {
       const href = safeUrl(l.url);
       if (!href) continue;
+      const key = linkIconKey(l);
+      const icon = key ? iconSvg(key) : null;
       links.append(
         el("a", {
-          class: "link",
+          class: icon ? "pill pill-icon project-link-icon" : "link",
           href,
           target: href.startsWith("http") ? "_blank" : undefined,
           rel: href.startsWith("http") ? "noreferrer" : undefined,
-          text: l.label || "Link"
+          text: icon ? undefined : (l.label || "Link"),
+          "aria-label": l.label || "Link",
+          title: l.label || "Link"
         })
       );
+      if (icon) {
+        const last = links.lastElementChild;
+        if (last) last.innerHTML = icon;
+      }
     }
 
     const highlights = Array.isArray(p.highlights) && p.highlights.length
@@ -234,12 +265,13 @@ function openProjectModal(project) {
   $("#modalDesc").textContent = project?.description || "";
 
   const existing = $("#modalVideo");
+  const existingMedia = $("#modalMedia");
   if (existing) existing.remove();
+  if (existingMedia) existingMedia.remove();
   const modalInner = modal.querySelector(".stack");
-  const mv = renderProjectVideo(project);
+  const mv = renderProjectMedia(project, "modal");
   if (mv) {
-    mv.id = "modalVideo";
-    mv.className = "modal-video";
+    mv.id = "modalMedia";
     modalInner?.insertBefore(mv, modalInner.firstChild);
   }
 
@@ -262,15 +294,23 @@ function openProjectModal(project) {
     for (const l of project?.links || []) {
       const href = safeUrl(l.url);
       if (!href) continue;
+      const key = linkIconKey(l);
+      const icon = key ? iconSvg(key) : null;
       links.append(
         el("a", {
-          class: "pill",
+          class: icon ? "pill pill-icon project-link-icon" : "pill",
           href,
           target: href.startsWith("http") ? "_blank" : undefined,
           rel: href.startsWith("http") ? "noreferrer" : undefined,
-          text: l.label || "link"
+          text: icon ? undefined : (l.label || "link"),
+          "aria-label": l.label || "link",
+          title: l.label || "link"
         })
       );
+      if (icon) {
+        const last = links.lastElementChild;
+        if (last) last.innerHTML = icon;
+      }
     }
   }
 
@@ -299,9 +339,14 @@ function initModal() {
 }
 
 function initContact(person) {
+  const emailLink = $("#emailLink");
   const locationText = $("#locationText");
   const contactLinks = $("#contactLinks");
 
+  if (emailLink) {
+    emailLink.textContent = person.email || "you@example.com";
+    emailLink.href = `mailto:${person.email || "you@example.com"}`;
+  }
   if (locationText) locationText.textContent = person.location || "";
   renderLinks(contactLinks, person.links, "link");
 }
@@ -325,6 +370,7 @@ async function main() {
   const data = await res.json();
 
   const person = data.person || {};
+  document.title = person.name || "Carlson Zheng";
   $("#brandName").textContent = person.name || "Your Name";
   $("#footerName").textContent = person.name || "Your Name";
   $("#heroKicker").textContent = person.hero?.kicker || "portfolio";
@@ -337,7 +383,11 @@ async function main() {
   $("#eduMeta").textContent = metaParts.length ? metaParts.join(" • ") : "—";
 
   const resumeButton = $("#resumeButton");
-  if (resumeButton && person.resumeUrl) resumeButton.setAttribute("href", person.resumeUrl);
+  if (resumeButton && person.resumeUrl) {
+    resumeButton.setAttribute("href", person.resumeUrl);
+    resumeButton.setAttribute("target", "_blank");
+    resumeButton.setAttribute("rel", "noreferrer");
+  }
 
   renderLinks($("#heroLinks"), person.links, "pill");
   renderProjects($("#projectsGrid"), data.projects);
