@@ -1,12 +1,12 @@
 # carlzheng.github.io
 Take a peak at my portfolio!
 
-## Edit your portfolio content
+## Editing your portfolio content
 
 Update `data.json`:
 - **person**: name, role, email, links, quick facts, resume URL
-- **projects**: add as many as you want (name/description/tags/links/highlights/**video preview**)
-- **about**: edit **awards** and **educationAndExperience**
+- **projects**: add as many as you want 
+- **about**: edit **awards** and **experiences**
 
 ### Project video previews
 
@@ -20,13 +20,13 @@ Each project can optionally include:
 }
 ```
 
-Create the folder `assets/videos/` and drop your files there (MP4 or WebM recommended).
+Create the folder `assets/videos/` and drop files there (MP4 or WebM recommended).
 
 Add your resume PDF at `assets/resume.pdf`, then set `"resumeUrl": "./assets/resume.pdf"` in `data.json`.
 
 ## Run locally
 
-Any static server works. For example (PowerShell):
+Run portfolio locally using the command:
 
 ```powershell
 python -m http.server 5173
