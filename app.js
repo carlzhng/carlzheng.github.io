@@ -1,6 +1,7 @@
 import { initPCB, initScrollShrink, initReveal, revealDynamic } from "./pcb.js";
 
 const $ = (sel) => document.querySelector(sel);
+let refreshTabsLayout = () => {};
 
 function iconSvg(kind) {
   if (kind === "github") {
@@ -242,20 +243,50 @@ function initTabs() {
   const awardsPanel = $("#tabAwards");
   const expPanel = $("#tabExp");
   if (!awardsBtn || !expBtn || !awardsPanel || !expPanel) return;
+  const panelsWrap = awardsPanel.parentElement;
+  let activePanel = expPanel;
+  let isAnimating = false;
 
-  const set = (which) => {
-    const awardsActive = which === "awards";
-    awardsBtn.classList.toggle("is-active", awardsActive);
-    expBtn.classList.toggle("is-active", !awardsActive);
-    awardsPanel.classList.toggle("is-active", awardsActive);
-    expPanel.classList.toggle("is-active", !awardsActive);
-    awardsBtn.setAttribute("aria-selected", String(awardsActive));
-    expBtn.setAttribute("aria-selected", String(!awardsActive));
+  const updatePanelHeight = () => {
+    if (!panelsWrap) return;
+    const h = Math.max(awardsPanel.scrollHeight, expPanel.scrollHeight);
+    panelsWrap.style.height = `${h}px`;
   };
 
+  const set = (which) => {
+    if (isAnimating) return;
+    const awardsActive = which === "awards";
+    const nextPanel = awardsActive ? awardsPanel : expPanel;
+    if (nextPanel === activePanel) return;
+    isAnimating = true;
+
+    panelsWrap?.setAttribute("data-dir", awardsActive ? "right" : "left");
+    activePanel.classList.add("is-leaving");
+    activePanel.classList.remove("is-active");
+    nextPanel.classList.add("is-entering");
+    nextPanel.classList.add("is-active");
+
+    awardsBtn.classList.toggle("is-active", awardsActive);
+    expBtn.classList.toggle("is-active", !awardsActive);
+    awardsBtn.setAttribute("aria-selected", String(awardsActive));
+    expBtn.setAttribute("aria-selected", String(!awardsActive));
+
+    requestAnimationFrame(updatePanelHeight);
+    window.setTimeout(() => {
+      activePanel.classList.remove("is-leaving");
+      nextPanel.classList.remove("is-entering");
+      activePanel = nextPanel;
+      isAnimating = false;
+    }, 260);
+  };
+
+  awardsPanel.classList.remove("is-active");
+  expPanel.classList.add("is-active");
   awardsBtn.addEventListener("click", () => set("awards"));
   expBtn.addEventListener("click", () => set("exp"));
-  set("exp");
+  window.addEventListener("resize", updatePanelHeight);
+  refreshTabsLayout = updatePanelHeight;
+  requestAnimationFrame(updatePanelHeight);
 }
 
 function openProjectModal(project) {
@@ -394,6 +425,7 @@ async function main() {
   $("#aboutSubtitle").textContent = data.about?.subtitle || "";
   renderItems($("#awardsList"), data.about?.awards);
   renderItems($("#expList"), data.about?.experiences);
+  refreshTabsLayout();
   initContact(person);
   initReveal();
   setTimeout(revealDynamic, 80);
