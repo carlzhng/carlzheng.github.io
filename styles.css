@@ -423,10 +423,12 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   transition: opacity 220ms ease, transform 240ms ease;
 }
 .tab-panel.is-active{
-  position: relative;
+  position: absolute;
+  inset: 0;
   opacity:1;
   transform: translateX(0);
   pointer-events:auto;
+  z-index: 1;
 }
 .tab-panel.is-leaving{
   position: absolute;
@@ -434,6 +436,7 @@ textarea:focus{outline:3px solid var(--ring);outline-offset:2px}
   opacity:0;
   transform: translateX(0);
   pointer-events: none;
+  z-index: 2;
 }
 .tab-panels[data-dir="left"] .tab-panel.is-entering{
   opacity:0;
