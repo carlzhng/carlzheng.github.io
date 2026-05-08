@@ -38,8 +38,18 @@
       ]
     },
     {
+      "name": "Domain Detector",
+      "description": "Collaborated on an AI that recognizes the hand-signs from the anime Jujutsu Kaisen. Using a custom-trained TensorFlow model and MediaPipe’s hand-tracking, the system tracks 21 skeletal landmarks in real-time to trigger visual effects when a specific hand sign is detected. This project involved creating a custom neural network from scratch, handling complex dependency management in a Linux environment, and training a lightweight model capable of real-time detection without requiring a dedicated GPU.",
+      "media": {
+        "image": "./assets/domainDetector.png"
+      },
+      "tags": ["Python", "Computer Vision", "Linux", "MediaPipe", "OpenCV", "TensorFlow"],
+      "highlights":["Created a custom process to record hand movements", "Reached a 93% success rate in identifying the correct gestures in real-time"],
+      "links": [{ "label": "Github", "url": "https://github.com/carlzhng/domain-computer-vision" }]
+    },
+    {
       "name": "Prompty",
-      "description": "Selected as one of the top 12% applicants to propose a strategic solution aimed to mitigate student career anxiety through the use of a gamified platform that targets the users ability to think critically and make decisions ethically. As part of a team, I was tasked with assisting in the devleopment of the first iteration of the websites's frontend and presenting the final product to industry professionals. The website uses generated prompts that asks the user a question and encourages original and imaginative thinking.",
+      "description": "As a team of 4 university students ranging from various programs, we were selected as one of the top 12% applicants to propose a strategic solution aimed to mitigate student career anxiety through the use of a gamified platform that targets the users ability to think critically and make decisions ethically. I was tasked with assisting in the devleopment of the first iteration of the websites's frontend and presenting the final protoype to industry professionals. The website uses generated prompts that asks the user a question and encourages original and imaginative thinking.",
       "media": {
         "image": "./assets/prompty.png",
         "modalImage": "./assets/promptyGIF.gif"
@@ -62,7 +72,8 @@
       "name": "This Portfolio!",
       "description": "Developed using HTML, CSS, and JavaScript, this portfolio is a showcase of my projects and achievements. It is hosted on GitHub Pages and is deployed using Vercel. The portfolio is responsive and mobile-friendly, and is built with a modern and clean design.",
       "media": {
-        "image": "./assets/portfolioProject.jpg"
+        "image": "./assets/logo.png",
+        "modalImage": "./assets/portfolioProject.jpg"
       },
       "tags": ["HTML", "CSS", "JavaScript"],
       "links": [{ "label": "Github", "url": "https://github.com/carlzhng/carlzheng.github.io" }]
@@ -86,6 +97,12 @@
         "subtitle": "Alberta Bionix | Edmonton, AB",
         "dates": "Dec 2025 — present",
         "details": "Contributing to the development of an EMG-powered prosthetic leg, integrating gait-cycle-based EMG control with PID encoder feedback and motor control. Designed and validated custom encoder and IMU sensor systems for 100% signal reliability and gait analysis."
+      },
+      {
+        "title": "Co-Founder/Co-President of Scarlett STEM Club",
+        "subtitle": "Dr. E.P. Scarlett High School | Calgary, AB",
+        "dates": "Sep 2021 — Jun 2024",
+        "details": "Co-founded Dr. E.P Scarlett’s first ever STEM club to inspire, promote, and encourage students to participate in science/engineering related activities and challenges regardless of experience and skill level."
       },
       {
         "title": "Sailing Instructor",

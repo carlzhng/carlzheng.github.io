@@ -92,7 +92,7 @@ function safeMediaUrl(url) {
 }
 
 function renderProjectMedia(p, context = "card") {
-  // context: "card" = grid thumbnail; "modal" = detail view (can use animated GIF)
+  // context: "card" | "folder" = static grid thumb; "modal" = detail (GIF / modalImage when set)
   const m = p?.media || {};
   let raw = null;
   if (context === "modal") {
@@ -116,14 +116,20 @@ function renderProjectMedia(p, context = "card") {
   if (!src) return null;
 
   const img = document.createElement("img");
-  img.className = context === "modal" ? "modal-media" : "project-media";
+  if (context === "modal") {
+    img.className = "modal-media";
+  } else if (context === "folder") {
+    img.className = "project-folder-thumb";
+  } else {
+    img.className = "project-media";
+  }
   img.src = src;
   img.alt =
     context === "modal"
       ? `${p?.name || "Project"} — detail preview`
       : `${p?.name || "Project"} preview`;
-  img.loading = "lazy";
-  img.decoding = "async";
+  img.loading = context === "modal" ? "eager" : "lazy";
+  img.decoding = context === "modal" ? "async" : "async";
   img.addEventListener("error", () => {
     img.remove();
   }, { once: true });
@@ -176,52 +182,37 @@ function renderProjects(container, projects) {
   if (!container) return;
   container.innerHTML = "";
   for (const p of projects || []) {
-    const preview = renderProjectMedia(p, "card");
-    const tags = el("div", { class: "meta" }, (p.tags || []).map((t) => el("span", { class: "tag", text: t })));
-    const links = el("div", { class: "links" });
-    for (const l of p.links || []) {
-      const href = safeUrl(l.url);
-      if (!href) continue;
-      const key = linkIconKey(l);
-      const icon = key ? iconSvg(key) : null;
-      links.append(
-        el("a", {
-          class: icon ? "pill pill-icon project-link-icon" : "link",
-          href,
-          target: href.startsWith("http") ? "_blank" : undefined,
-          rel: href.startsWith("http") ? "noreferrer" : undefined,
-          text: icon ? undefined : (l.label || "Link"),
-          "aria-label": l.label || "Link",
-          title: l.label || "Link"
-        })
-      );
-      if (icon) {
-        const last = links.lastElementChild;
-        if (last) last.innerHTML = icon;
-      }
-    }
+    const thumb = renderProjectMedia(p, "folder");
+    const pocketChildren = thumb
+      ? [thumb]
+      : [el("div", { class: "project-folder-placeholder", "aria-hidden": "true" })];
 
-    const highlights = Array.isArray(p.highlights) && p.highlights.length
-      ? el("ul", {}, p.highlights.map((h) => el("li", { text: h })))
-      : null;
+    const shape = el("div", { class: "project-folder-shape", "aria-hidden": "true" }, [
+      el("div", { class: "project-folder-tab" }),
+      el("div", { class: "project-folder-pocket" }, pocketChildren)
+    ]);
 
-    const cardChildren = [
-      ...(preview ? [preview] : []),
-      el("div", {}, [el("h3", { text: p.name || "Untitled" }), el("p", { text: p.description || "" })]),
-      tags,
-      ...(highlights ? [highlights] : []),
-      links
-    ];
+    const title = p.name || "Untitled";
+    const folder = el(
+      "article",
+      {
+        class: "project-folder card reveal-card",
+        tabindex: "0",
+        role: "button",
+        "aria-haspopup": "dialog",
+        "aria-label": `Open ${title} details`
+      },
+      [shape, el("h3", { class: "project-folder-title", text: title })]
+    );
 
-    const card = el("article", { class: "card project reveal-card", tabindex: "0" }, cardChildren);
-    card.addEventListener("click", () => openProjectModal(p));
-    card.addEventListener("keydown", (e) => {
+    folder.addEventListener("click", () => openProjectModal(p));
+    folder.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         openProjectModal(p);
       }
     });
-    container.append(card);
+    container.append(folder);
   }
 }
 
@@ -303,6 +294,10 @@ function openProjectModal(project) {
   const mv = renderProjectMedia(project, "modal");
   if (mv) {
     mv.id = "modalMedia";
+    const srcAttr = mv.getAttribute("src") || mv.src || "";
+    if (/\.gif(\?|#|$)/i.test(srcAttr)) {
+      mv.classList.add("modal-media--gif");
+    }
     modalInner?.insertBefore(mv, modalInner.firstChild);
   }
 

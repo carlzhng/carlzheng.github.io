@@ -17,21 +17,27 @@ export function initPCB() {
   function colors() {
     if (isDark()) {
       return {
-        bg: "rgba(9,14,24,0.22)",
-        trace: "rgba(138,115,255,0.42)",
-        node: "rgba(62,230,156,0.62)",
-        nodeFill: "rgba(62,230,156,0.22)",
-        cube: "rgba(162,140,255,0.55)",
-        cubeFill: "rgba(124,92,255,0.16)",
+        isDark: true,
+        /** Heavier veil (~#070b13 at ~0x0f) plus alpha so grids sit on a deep slab */
+        bg: "rgba(6,10,18,0.78)",
+        trace: "rgba(78,92,138,0.26)",
+        node: "rgba(52,146,118,0.38)",
+        nodeFill: "rgba(22,62,54,0.22)",
+        /** Muted violet–slate wireframe; darker fills read as shaded faces */
+        cube: "rgba(68,74,118,0.38)",
+        cubeFill: "rgba(18,20,34,0.52)",
+        cubeOpacityMul: 0.74,
       };
     }
     return {
+      isDark: false,
       bg: "rgba(247,247,251,0.22)",
       trace: "rgba(91,63,255,0.16)",
       node: "rgba(11,138,88,0.34)",
       nodeFill: "rgba(11,138,88,0.10)",
       cube: "rgba(91,63,255,0.30)",
       cubeFill: "rgba(91,63,255,0.08)",
+      cubeOpacityMul: 1,
     };
   }
 
@@ -204,9 +210,10 @@ export function initPCB() {
     drawPCB(col, rotation);
 
     // Cubes
+    const cubeMul = col.cubeOpacityMul ?? 1;
     for (const c of cubes) {
       ctx.save();
-      ctx.globalAlpha = c.opacity;
+      ctx.globalAlpha = Math.min(1, c.opacity * cubeMul);
       drawCube(c.x, c.y, c.s, c.rx, c.ry, c.rz, col);
       ctx.restore();
 
